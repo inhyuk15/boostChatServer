@@ -14,19 +14,25 @@ public:
 	}
 	void read() {
 		auto self(shared_from_this());
-		boost::asio::async_read(socket_, boost::asio::buffer(buff_), [this, self](boost::system::error_code ec, size_t bytesRead) {
-			if (!ec || ec == boost::asio::error::eof) {
-				std::cout << "read success : " << std::string(buff_.begin(), buff_.begin() + bytesRead) << std::endl;
+		boost::asio::async_read_until(socket_, buff_, '\n', [this, self](boost::system::error_code ec, size_t bytesRead) {
+			if (!ec) {
+				std::istream is(&buff_);
+				std::string line;
+				std::getline(is, line);
+				
+				std::cout << "read success : " << line << std::endl;
+				read();
 			} else {
 				std::cerr << "error in reading " << ec.message() << std::endl;
+				socket_.close();
 			}
-			
 		});
 	}
 	
 private:
 	tcp::socket socket_;
-	std::vector<char> buff_;
+//	std::vector<char> buff_;
+	boost::asio::streambuf buff_;
 	static constexpr int BUFF_SIZE = 32;
 };
 
