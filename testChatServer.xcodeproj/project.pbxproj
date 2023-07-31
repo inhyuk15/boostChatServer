@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		EC047FB82A5BB7CF00D4FF42 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC047FB72A5BB7CF00D4FF42 /* main.cpp */; };
+		ECF98B3F2A77D93F00F7593C /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF98B3D2A77D93F00F7593C /* Session.cpp */; };
+		ECF98B422A77D94800F7593C /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF98B402A77D94800F7593C /* Server.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +28,11 @@
 		EC047FB42A5BB7CE00D4FF42 /* testChatServer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testChatServer; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC047FB72A5BB7CF00D4FF42 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EC759A032A6FF97B00ED5CFF /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		ECF98B3B2A77D84700F7593C /* .clang-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
+		ECF98B3D2A77D93F00F7593C /* Session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Session.cpp; sourceTree = "<group>"; };
+		ECF98B3E2A77D93F00F7593C /* Session.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Session.hpp; sourceTree = "<group>"; };
+		ECF98B402A77D94800F7593C /* Server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Server.cpp; sourceTree = "<group>"; };
+		ECF98B412A77D94800F7593C /* Server.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Server.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +49,7 @@
 		EC047FAB2A5BB7CE00D4FF42 = {
 			isa = PBXGroup;
 			children = (
+				ECF98B3B2A77D84700F7593C /* .clang-format */,
 				EC759A032A6FF97B00ED5CFF /* readme.md */,
 				EC047FB62A5BB7CF00D4FF42 /* testChatServer */,
 				EC047FB52A5BB7CE00D4FF42 /* Products */,
@@ -60,6 +68,10 @@
 			isa = PBXGroup;
 			children = (
 				EC047FB72A5BB7CF00D4FF42 /* main.cpp */,
+				ECF98B3D2A77D93F00F7593C /* Session.cpp */,
+				ECF98B3E2A77D93F00F7593C /* Session.hpp */,
+				ECF98B402A77D94800F7593C /* Server.cpp */,
+				ECF98B412A77D94800F7593C /* Server.hpp */,
 			);
 			path = testChatServer;
 			sourceTree = "<group>";
@@ -74,6 +86,7 @@
 				EC047FB02A5BB7CE00D4FF42 /* Sources */,
 				EC047FB12A5BB7CE00D4FF42 /* Frameworks */,
 				EC047FB22A5BB7CE00D4FF42 /* CopyFiles */,
+				ECF98B3C2A77D86400F7593C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -116,11 +129,33 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		ECF98B3C2A77D86400F7593C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = " if [ -z \"${SRCROOT}\" ]; then\n    echo \"The SRCROOT build setting must be set\"\n    exit 1\nfi\n\nfind \"${SRCROOT}\" \\( -name '*.h' -or -name '*.cpp' \\) -exec /usr/local/bin/clang-format -i {} \\;\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EC047FB02A5BB7CE00D4FF42 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECF98B3F2A77D93F00F7593C /* Session.cpp in Sources */,
+				ECF98B422A77D94800F7593C /* Server.cpp in Sources */,
 				EC047FB82A5BB7CF00D4FF42 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
