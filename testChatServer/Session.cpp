@@ -1,11 +1,11 @@
 #include "Session.hpp"
 
-#include "Server.hpp"
+#include "Room.hpp"
 
-Session::Session(tcp::socket socket, std::shared_ptr<Server> server)
-    : socket_(std::move(socket)), buff_(BUFF_SIZE), server_(server) {}
+Session::Session(tcp::socket socket, std::shared_ptr<Room> room)
+    : socket_(std::move(socket)), buff_(BUFF_SIZE), room_(room) {}
 void Session::start() {
-    server_->join(shared_from_this());
+    room_->join(shared_from_this());
     read();
 }
 
@@ -22,10 +22,10 @@ void Session::read() {
 
                 std::cout << "read success : " << line << std::endl;
 
-                server_->deliver(line);
+                room_->deliver(line);
                 read();
             } else if (ec == boost::asio::error::eof) {
-                server_->leave(shared_from_this());
+                room_->leave(shared_from_this());
             } else {
                 std::cerr << "error in reading " << ec.message() << std::endl;
                 socket_.close();

@@ -8,21 +8,16 @@
 
 using boost::asio::ip::tcp;
 
-class Session;
+class Room;
 
 class Server : public std::enable_shared_from_this<Server> {
 	 public:
 	Server(boost::asio::io_context& io_context, tcp::endpoint& endpoint);
 	void accept();
-	
-	void join(std::shared_ptr<Session> session);
-	void leave(std::shared_ptr<Session> session);
-	
-	void deliver(const std::string& msg);
 
 	 private:
 		tcp::acceptor acceptor_;
-	std::set<std::shared_ptr<Session>> sessions_;
+	std::shared_ptr<Room> room_;
 	
 };
 

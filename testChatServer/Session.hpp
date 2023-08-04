@@ -8,11 +8,11 @@
 
 using boost::asio::ip::tcp;
 
-class Server;
+class Room;
 
 class Session : public std::enable_shared_from_this<Session> {
 	 public:
-	Session(tcp::socket socket, std::shared_ptr<Server> server);
+	Session(tcp::socket socket, std::shared_ptr<Room> room);
 	void start();
 	void read();
 	
@@ -23,7 +23,7 @@ class Session : public std::enable_shared_from_this<Session> {
 		tcp::socket socket_;
 		boost::asio::streambuf buff_;
 		static constexpr int BUFF_SIZE = 32;
-	std::shared_ptr<Server> server_;
+	std::shared_ptr<Room> room_;
 	
 	std::deque<std::string> writeMsgs_;
 };
