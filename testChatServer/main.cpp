@@ -11,7 +11,10 @@ int main(int argc, const char* argv[]) {
     std::string port = "4000";
     boost::asio::io_context io_context;
     tcp::endpoint endpoint(tcp::v4(), stoi(port));
-    Server server(io_context, endpoint);
+
+    auto server = std::make_shared<Server>(io_context, endpoint);
+    server->accept();
+
     io_context.run();
 
     return 0;
