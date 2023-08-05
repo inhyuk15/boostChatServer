@@ -19,6 +19,8 @@ class Session : public std::enable_shared_from_this<Session> {
 	void deliver(const std::string& msg);
 	void write();
 	
+	std::string nickname();
+	
 	 private:
 		tcp::socket socket_;
 		boost::asio::streambuf buff_;
@@ -26,6 +28,7 @@ class Session : public std::enable_shared_from_this<Session> {
 	std::shared_ptr<Room> room_;
 	
 	std::deque<std::string> writeMsgs_;
+	std::string nickname_;
 };
 
 #endif /* Session_hpp */

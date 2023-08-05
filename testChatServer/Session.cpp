@@ -5,8 +5,24 @@
 Session::Session(tcp::socket socket, std::shared_ptr<Room> room)
     : socket_(std::move(socket)), buff_(BUFF_SIZE), room_(room) {}
 void Session::start() {
-    room_->join(shared_from_this());
-    read();
+    auto self(shared_from_this());
+    boost::asio::async_read_until(
+        socket_, buff_, '\n',
+        [this, self](boost::system::error_code ec, size_t bytesRead) {
+            if (!ec) {
+                std::istream is(&buff_);
+                std::getline(is, nickname_);
+
+                room_->join(shared_from_this());
+                read();
+
+            } else if (ec == boost::asio::error::eof) {
+                room_->leave(shared_from_this());
+            } else {
+                std::cerr << "error in reading " << ec.message() << std::endl;
+                socket_.close();
+            }
+        });
 }
 
 void Session::read() {
@@ -18,11 +34,9 @@ void Session::read() {
                 std::istream is(&buff_);
                 std::string line;
                 std::getline(is, line);
-                line += "\n";
+                std::string sendLine = nickname() + ": " + line + "\n";
 
-                std::cout << "read success : " << line << std::endl;
-
-                room_->deliver(line);
+                room_->deliver(sendLine);
                 read();
             } else if (ec == boost::asio::error::eof) {
                 room_->leave(shared_from_this());
@@ -42,10 +56,11 @@ void Session::deliver(const std::string& msg) {
 }
 
 void Session::write() {
+    auto self(shared_from_this());
     boost::asio::async_write(
         socket_,
         boost::asio::buffer(writeMsgs_.front(), writeMsgs_.front().size()),
-        [this](boost::system::error_code ec, size_t byteTransferred) {
+        [this, self](boost::system::error_code ec, size_t byteTransferred) {
             if (!ec) {
                 writeMsgs_.pop_front();
                 if (!writeMsgs_.empty()) {
@@ -57,3 +72,5 @@ void Session::write() {
             }
         });
 }
+
+std::string Session::nickname() { return nickname_; }
