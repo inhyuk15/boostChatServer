@@ -6,6 +6,8 @@
 #include <iostream>
 #include <queue>
 
+#include "ChatMessage.hpp"
+
 using boost::asio::ip::tcp;
 using boost::asio::awaitable;
 using boost::asio::co_spawn;
@@ -18,14 +20,13 @@ class Session : public std::enable_shared_from_this<Session> {
 	 public:
 	Session(tcp::socket socket, std::shared_ptr<Room> room);
 	void start();
-	
 	boost::asio::awaitable<void> readNickname();
 	boost::asio::awaitable<void> readMsg();
 	boost::asio::awaitable<void> startRead();
 	
 	void deliver(const std::string& msg);
+	void deliver(const ChatMessage& msg);
 	boost::asio::awaitable<void> write();
-	
 	void stop();
 	
 	std::string nickname();
@@ -33,11 +34,11 @@ class Session : public std::enable_shared_from_this<Session> {
 	 private:
 		tcp::socket socket_;
 	std::shared_ptr<Room> room_;
+	boost::asio::steady_timer timer_;
 	
 	std::deque<std::string> writeMsgs_;
+	std::deque<ChatMessage> writeMsgs2_;
 	std::string nickname_;
-	
-	boost::asio::steady_timer timer_;
 };
 
 #endif /* Session_hpp */
