@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		EC047FB82A5BB7CF00D4FF42 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC047FB72A5BB7CF00D4FF42 /* main.cpp */; };
-		ECD8D34E2AA572AF0081591E /* ChatMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD8D34C2AA572AF0081591E /* ChatMessage.cpp */; };
+		ECC29B072AAA33D00007CE9A /* WebSocketServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECC29B052AAA33D00007CE9A /* WebSocketServer.cpp */; };
+		ECD8D34E2AA572AF0081591E /* ChatMessageWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD8D34C2AA572AF0081591E /* ChatMessageWrapper.cpp */; };
 		ECD8D3512AA572C00081591E /* chat.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = ECD8D34F2AA572C00081591E /* chat.pb.cc */; };
 		ECF98B3F2A77D93F00F7593C /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF98B3D2A77D93F00F7593C /* Session.cpp */; };
-		ECF98B422A77D94800F7593C /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF98B402A77D94800F7593C /* Server.cpp */; };
+		ECF98B422A77D94800F7593C /* TcpServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF98B402A77D94800F7593C /* TcpServer.cpp */; };
 		ECF98B482A7D873300F7593C /* Room.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF98B462A7D873300F7593C /* Room.cpp */; };
 /* End PBXBuildFile section */
 
@@ -31,15 +32,18 @@
 		EC047FB42A5BB7CE00D4FF42 /* testChatServer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testChatServer; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC047FB72A5BB7CF00D4FF42 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EC759A032A6FF97B00ED5CFF /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
-		ECD8D34C2AA572AF0081591E /* ChatMessage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ChatMessage.cpp; sourceTree = "<group>"; };
-		ECD8D34D2AA572AF0081591E /* ChatMessage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChatMessage.hpp; sourceTree = "<group>"; };
+		ECC29B032AAA31EA0007CE9A /* Server.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Server.hpp; sourceTree = "<group>"; };
+		ECC29B052AAA33D00007CE9A /* WebSocketServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocketServer.cpp; sourceTree = "<group>"; };
+		ECC29B062AAA33D00007CE9A /* WebSocketServer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WebSocketServer.hpp; sourceTree = "<group>"; };
+		ECD8D34C2AA572AF0081591E /* ChatMessageWrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ChatMessageWrapper.cpp; sourceTree = "<group>"; };
+		ECD8D34D2AA572AF0081591E /* ChatMessageWrapper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChatMessageWrapper.hpp; sourceTree = "<group>"; };
 		ECD8D34F2AA572C00081591E /* chat.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chat.pb.cc; sourceTree = "<group>"; };
 		ECD8D3502AA572C00081591E /* chat.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chat.pb.h; sourceTree = "<group>"; };
 		ECF98B3B2A77D84700F7593C /* .clang-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
 		ECF98B3D2A77D93F00F7593C /* Session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Session.cpp; sourceTree = "<group>"; };
 		ECF98B3E2A77D93F00F7593C /* Session.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Session.hpp; sourceTree = "<group>"; };
-		ECF98B402A77D94800F7593C /* Server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Server.cpp; sourceTree = "<group>"; };
-		ECF98B412A77D94800F7593C /* Server.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Server.hpp; sourceTree = "<group>"; };
+		ECF98B402A77D94800F7593C /* TcpServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TcpServer.cpp; sourceTree = "<group>"; };
+		ECF98B412A77D94800F7593C /* TcpServer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TcpServer.hpp; sourceTree = "<group>"; };
 		ECF98B462A7D873300F7593C /* Room.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Room.cpp; sourceTree = "<group>"; };
 		ECF98B472A7D873300F7593C /* Room.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Room.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,12 +85,15 @@
 				EC047FB72A5BB7CF00D4FF42 /* main.cpp */,
 				ECF98B3D2A77D93F00F7593C /* Session.cpp */,
 				ECF98B3E2A77D93F00F7593C /* Session.hpp */,
-				ECF98B402A77D94800F7593C /* Server.cpp */,
-				ECF98B412A77D94800F7593C /* Server.hpp */,
+				ECF98B402A77D94800F7593C /* TcpServer.cpp */,
+				ECF98B412A77D94800F7593C /* TcpServer.hpp */,
 				ECF98B462A7D873300F7593C /* Room.cpp */,
 				ECF98B472A7D873300F7593C /* Room.hpp */,
-				ECD8D34C2AA572AF0081591E /* ChatMessage.cpp */,
-				ECD8D34D2AA572AF0081591E /* ChatMessage.hpp */,
+				ECD8D34C2AA572AF0081591E /* ChatMessageWrapper.cpp */,
+				ECD8D34D2AA572AF0081591E /* ChatMessageWrapper.hpp */,
+				ECC29B032AAA31EA0007CE9A /* Server.hpp */,
+				ECC29B052AAA33D00007CE9A /* WebSocketServer.cpp */,
+				ECC29B062AAA33D00007CE9A /* WebSocketServer.hpp */,
 			);
 			path = testChatServer;
 			sourceTree = "<group>";
@@ -169,10 +176,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ECD8D34E2AA572AF0081591E /* ChatMessage.cpp in Sources */,
+				ECD8D34E2AA572AF0081591E /* ChatMessageWrapper.cpp in Sources */,
 				ECF98B3F2A77D93F00F7593C /* Session.cpp in Sources */,
 				ECD8D3512AA572C00081591E /* chat.pb.cc in Sources */,
-				ECF98B422A77D94800F7593C /* Server.cpp in Sources */,
+				ECF98B422A77D94800F7593C /* TcpServer.cpp in Sources */,
+				ECC29B072AAA33D00007CE9A /* WebSocketServer.cpp in Sources */,
 				ECF98B482A7D873300F7593C /* Room.cpp in Sources */,
 				EC047FB82A5BB7CF00D4FF42 /* main.cpp in Sources */,
 			);

@@ -1,12 +1,12 @@
-#ifndef ChatMessage_hpp
-#define ChatMessage_hpp
+#ifndef ChatMessageWrapper_hpp
+#define ChatMessageWrapper_hpp
 
 #include "chat.pb.h"
 
-class ChatMessage {
+class ChatMessageWrapper {
 public:
-	ChatMessage();
-		ChatMessage(const std::string& userName, uint32_t timestamp, chat::DataType dataType);
+	ChatMessageWrapper();
+		ChatMessageWrapper(const std::string& userName, uint32_t timestamp, chat::DataType dataType);
 
 		void setTextMessage(const std::string& messageText);
 		void setImageMessage(const std::string& imageExtension, const std::vector<uint8_t>& imageData);
@@ -26,4 +26,4 @@ private:
 		chat::ChatMessage message_;
 };
 
-#endif /* ChatMessage_hpp */
+#endif /* ChatMessageWrapper_hpp */

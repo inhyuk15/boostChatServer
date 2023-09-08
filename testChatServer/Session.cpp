@@ -1,6 +1,5 @@
 #include "Session.hpp"
 
-// #include "ChatMessage.hpp"
 #include "Room.hpp"
 
 Session::Session(tcp::socket socket, std::shared_ptr<Room> room)
@@ -42,7 +41,7 @@ boost::asio::awaitable<void> Session::readMsg() {
             std::string binaryData(dataSize, '\0');
             co_await boost::asio::async_read(
                 socket_, boost::asio::buffer(binaryData), use_awaitable);
-            ChatMessage chatMessage;
+            ChatMessageWrapper chatMessage;
             chatMessage.decode(binaryData);
 
             std::cout << "Username: " << chatMessage.getUserName() << std::endl;
@@ -77,7 +76,7 @@ void Session::deliver(const std::string& msg) {
     timer_.cancel_one();
 }
 
-void Session::deliver(const ChatMessage& msg) {
+void Session::deliver(const ChatMessageWrapper& msg) {
     std::cout << "msg " << msg.getUserName() << std::endl;
     writeMsgs2_.push_back(msg);
     timer_.cancel_one();

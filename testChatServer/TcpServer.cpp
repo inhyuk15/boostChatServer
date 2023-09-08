@@ -1,16 +1,17 @@
-#include "Server.hpp"
+#include "TcpServer.hpp"
 
 #include "Room.hpp"
 #include "Session.hpp"
 
-Server::Server(boost::asio::io_context& io_context, tcp::endpoint& endpoint)
-    : acceptor_(io_context, endpoint) {
+TcpServer::TcpServer(boost::asio::io_context& io_context,
+                     tcp::endpoint& endpoint)
+    : Server(io_context, endpoint) {
     room_ = std::make_shared<Room>();
 
     co_spawn(io_context, accept(), detached);
 }
 
-boost::asio::awaitable<void> Server::accept() {
+boost::asio::awaitable<void> TcpServer::accept() {
     for (;;) {
         tcp::socket socket =
             co_await acceptor_.async_accept(boost::asio::use_awaitable);

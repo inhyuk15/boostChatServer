@@ -1,6 +1,6 @@
 #include "Room.hpp"
 
-#include "ChatMessage.hpp"
+#include "ChatMessageWrapper.hpp"
 #include "Session.hpp"
 
 Room::Room() {}
@@ -21,7 +21,7 @@ void Room::deliver(const std::string& msg) {
     }
 }
 
-void Room::deliver(const ChatMessage& msg) {
+void Room::deliver(const ChatMessageWrapper& msg) {
     for (auto session : sessions_) {
         session->deliver(msg);
     }

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <queue>
 
-#include "ChatMessage.hpp"
+#include "ChatMessageWrapper.hpp"
 
 using boost::asio::ip::tcp;
 using boost::asio::awaitable;
@@ -25,7 +25,7 @@ class Session : public std::enable_shared_from_this<Session> {
 	boost::asio::awaitable<void> startRead();
 	
 	void deliver(const std::string& msg);
-	void deliver(const ChatMessage& msg);
+	void deliver(const ChatMessageWrapper& msg);
 	boost::asio::awaitable<void> write();
 	void stop();
 	
@@ -37,7 +37,7 @@ class Session : public std::enable_shared_from_this<Session> {
 	boost::asio::steady_timer timer_;
 	
 	std::deque<std::string> writeMsgs_;
-	std::deque<ChatMessage> writeMsgs2_;
+	std::deque<ChatMessageWrapper> writeMsgs2_;
 	std::string nickname_;
 };
 

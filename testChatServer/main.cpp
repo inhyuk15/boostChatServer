@@ -4,15 +4,23 @@
 
 #include "Server.hpp"
 #include "Session.hpp"
+#include "TcpServer.hpp"
+#include "WebSocketServer.hpp"
 
 using boost::asio::ip::tcp;
 
 int main(int argc, const char* argv[]) {
-    std::string port = "4000";
+    std::string tcpPort = "4000";
+    std::string wsPort = "4001";
     boost::asio::io_context io_context;
-    tcp::endpoint endpoint(tcp::v4(), stoi(port));
+    tcp::endpoint tcpEndpoint(tcp::v4(), stoi(tcpPort));
+    tcp::endpoint wsEndpoint(tcp::v4(), stoi(wsPort));
     try {
-        auto server = std::make_shared<Server>(io_context, endpoint);
+        std::shared_ptr<Server> tcpServer =
+            std::make_shared<TcpServer>(io_context, tcpEndpoint);
+
+        std::shared_ptr<Server> webSocketServer =
+            std::make_shared<WebSocketServer>(io_context, wsEndpoint);
 
         io_context.run();
     } catch (std::exception& e) {

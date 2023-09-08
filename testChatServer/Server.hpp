@@ -2,7 +2,6 @@
 #define Server_hpp
 
 #include <boost/asio.hpp>
-
 #include <cstdlib>
 #include <iostream>
 #include <set>
@@ -16,14 +15,18 @@ using boost::asio::use_awaitable;
 class Room;
 
 class Server : public std::enable_shared_from_this<Server> {
-	 public:
-	Server(boost::asio::io_context& io_context, tcp::endpoint& endpoint);
-	boost::asio::awaitable<void> accept();
-
-	 private:
-		tcp::acceptor acceptor_;
-	std::shared_ptr<Room> room_;
+public:
+	virtual ~Server() = default;
+	virtual boost::asio::awaitable<void> accept() = 0;
 	
+protected:
+		boost::asio::io_context& io_context_;
+		tcp::acceptor acceptor_;
+		std::shared_ptr<Room> room_;
+		
+		Server(boost::asio::io_context& io_context, const tcp::endpoint& endpoint)
+				: io_context_(io_context), acceptor_(io_context, endpoint) {}
 };
 
-#endif /* Server_hpp */
+
+#endif
