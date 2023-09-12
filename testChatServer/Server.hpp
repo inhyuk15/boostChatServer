@@ -21,11 +21,10 @@ public:
 	
 protected:
 		boost::asio::io_context& io_context_;
-		tcp::acceptor acceptor_;
 		std::shared_ptr<Room> room_;
 		
 		Server(boost::asio::io_context& io_context, const tcp::endpoint& endpoint)
-				: io_context_(io_context), acceptor_(io_context, endpoint) {}
+				: io_context_(io_context) {}
 };
 
 

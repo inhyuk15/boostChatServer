@@ -19,8 +19,8 @@ int main(int argc, const char* argv[]) {
         std::shared_ptr<Server> tcpServer =
             std::make_shared<TcpServer>(io_context, tcpEndpoint);
 
-        std::shared_ptr<Server> webSocketServer =
-            std::make_shared<WebSocketServer>(io_context, wsEndpoint);
+        //        std::shared_ptr<Server> webSocketServer =
+        //            std::make_shared<WebSocketServer>(io_context, wsEndpoint);
 
         io_context.run();
     } catch (std::exception& e) {

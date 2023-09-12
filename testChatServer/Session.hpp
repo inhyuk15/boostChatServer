@@ -14,17 +14,16 @@ using boost::asio::co_spawn;
 using boost::asio::detached;
 using boost::asio::use_awaitable;
 
+class BaseSessionCommunicator;
 class Room;
 
 class Session : public std::enable_shared_from_this<Session> {
 	 public:
-	Session(tcp::socket socket, std::shared_ptr<Room> room);
+	Session(std::shared_ptr<BaseSessionCommunicator> communicator, std::shared_ptr<Room> room);
 	void start();
-	boost::asio::awaitable<void> readNickname();
 	boost::asio::awaitable<void> readMsg();
 	boost::asio::awaitable<void> startRead();
 	
-	void deliver(const std::string& msg);
 	void deliver(const ChatMessageWrapper& msg);
 	boost::asio::awaitable<void> write();
 	void stop();
@@ -32,13 +31,13 @@ class Session : public std::enable_shared_from_this<Session> {
 	std::string nickname();
 	
 	 private:
-		tcp::socket socket_;
-	std::shared_ptr<Room> room_;
-	boost::asio::steady_timer timer_;
-	
-	std::deque<std::string> writeMsgs_;
-	std::deque<ChatMessageWrapper> writeMsgs2_;
-	std::string nickname_;
+		std::shared_ptr<Room> room_;
+		
+		std::deque<std::string> writeMsgs_;
+		std::deque<ChatMessageWrapper> writeMsgs2_;
+		std::string nickname_;
+		
+		std::shared_ptr<BaseSessionCommunicator> communicator_;
 };
 
 #endif /* Session_hpp */
