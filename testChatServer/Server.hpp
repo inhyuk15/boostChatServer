@@ -40,7 +40,6 @@ template <typename SrvComm, typename SesComm, typename SocketType>
 boost::asio::awaitable<void> Server<SrvComm, SesComm, SocketType>::accept() {
 	for (;;) {
 		auto sessionCommunicator = co_await serverCommunicator_->asyncAccept();
-
 		try {
 			std::cout << "client accepted! " << std::endl;
 			std::make_shared<Session<SocketType>>(sessionCommunicator, room_)->start();

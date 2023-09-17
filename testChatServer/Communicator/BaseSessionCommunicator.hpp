@@ -30,7 +30,7 @@ public:
 	
 protected:
 	BaseSessionCommunicator(SocketType socket): socket_(std::move(socket)), timer_(socket.get_executor()) {}
-	tcp::socket socket_;
+	SocketType socket_;
 	boost::asio::steady_timer timer_;
 };
 

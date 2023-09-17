@@ -2,6 +2,7 @@
 #define Session_hpp
 
 #include <boost/asio.hpp>
+#include <boost/beast/websocket.hpp>
 #include <cstdlib>
 #include <iostream>
 #include <queue>
@@ -9,6 +10,7 @@
 #include "Room.hpp"
 #include "ChatMessageWrapper.hpp"
 #include "BaseSessionCommunicator.hpp"
+
 
 using boost::asio::ip::tcp;
 using boost::asio::awaitable;
