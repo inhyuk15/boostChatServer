@@ -3,12 +3,14 @@
 
 #include "BaseServerCommunicator.hpp"
 
-class BaseSessionCommunicator;
+class TcpSessionCommunicator;
 
-class TcpServerCommunicator : public BaseServerCommunicator {
+class TcpServerCommunicator : public BaseServerCommunicator<TcpSessionCommunicator> {
+//class TcpServerCommunicator {
 public:
-	TcpServerCommunicator(boost::asio::io_context& io_context, tcp::endpoint& endpoint);
-	boost::asio::awaitable<std::shared_ptr<BaseSessionCommunicator>> asyncAccept() override;
+	TcpServerCommunicator(boost::asio::io_context& io_context, const tcp::endpoint& endpoint);
+	boost::asio::awaitable<std::shared_ptr<TcpSessionCommunicator>> asyncAccept() override;
+//		boost::asio::awaitable<std::shared_ptr<TcpSessionCommunicator>> asyncAccept();
 };
 
 #endif /* TcpServerCommunicator_hpp */

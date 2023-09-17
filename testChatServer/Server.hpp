@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <set>
+#include "Room.hpp"
+#include "Session.hpp"
 
 using boost::asio::ip::tcp;
 using boost::asio::awaitable;
@@ -12,20 +14,40 @@ using boost::asio::co_spawn;
 using boost::asio::detached;
 using boost::asio::use_awaitable;
 
-class Room;
 
-class Server : public std::enable_shared_from_this<Server> {
+template <typename SrvComm, typename SesComm, typename SocketType>
+class Server : public std::enable_shared_from_this<Server<SrvComm, SesComm, SocketType>> {
 public:
-	virtual ~Server() = default;
-	virtual boost::asio::awaitable<void> accept() = 0;
-	
-protected:
-		boost::asio::io_context& io_context_;
-		std::shared_ptr<Room> room_;
-		
-		Server(boost::asio::io_context& io_context, const tcp::endpoint& endpoint)
-				: io_context_(io_context) {}
+	Server(boost::asio::io_context& io_context, const tcp::endpoint& endpoint, std::shared_ptr<Room> room);
+	boost::asio::awaitable<void> accept();
+
+private:
+	boost::asio::io_context& io_context_;
+	std::shared_ptr<Room> room_;
+	std::shared_ptr<SrvComm> serverCommunicator_;
 };
 
+template <typename SrvComm, typename SesComm, typename SocketType>
+Server<SrvComm, SesComm, SocketType>::Server(boost::asio::io_context& io_context,
+										 const tcp::endpoint& endpoint, std::shared_ptr<Room> room)
+: io_context_(io_context), room_(room)
+, serverCommunicator_(
+					std::make_shared<SrvComm>(io_context, endpoint)) {
+		co_spawn(io_context, accept(), detached);
+}
+
+template <typename SrvComm, typename SesComm, typename SocketType>
+boost::asio::awaitable<void> Server<SrvComm, SesComm, SocketType>::accept() {
+	for (;;) {
+		auto sessionCommunicator = co_await serverCommunicator_->asyncAccept();
+
+		try {
+			std::cout << "client accepted! " << std::endl;
+			std::make_shared<Session<SocketType>>(sessionCommunicator, room_)->start();
+		} catch (std::exception& e) {
+			std::cerr << "error in acception" << e.what() << std::endl;
+		}
+	}
+}
 
 #endif

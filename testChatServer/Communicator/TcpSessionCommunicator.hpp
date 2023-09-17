@@ -12,21 +12,20 @@ using boost::asio::use_awaitable;
 
 class ChatMessageWrapper;
 
-class TcpSessionCommunicator : public BaseSessionCommunicator {
+class TcpSessionCommunicator : public BaseSessionCommunicator<tcp::socket> {
 public:
 	TcpSessionCommunicator(tcp::socket socket);
 
-	tcp::socket::executor_type getExecutor() override;
+	boost::asio::any_io_executor getExecutor() override;
 	
-private:
 	boost::asio::awaitable<ChatMessageWrapper> asyncRead() override;
-	
+
 	boost::asio::awaitable<void> asyncWrite(const std::string& sendBytes) override;
 	
 	boost::asio::awaitable<void> asyncWait() override;
-	
+
 	void cancelOne() override;
-	
+
 	void stop() override;
 };
 

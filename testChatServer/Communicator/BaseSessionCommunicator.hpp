@@ -11,12 +11,12 @@ using boost::asio::use_awaitable;
 
 class ChatMessageWrapper;
 
+template <typename SocketType>
 class BaseSessionCommunicator {
-
 public:
 	virtual ~BaseSessionCommunicator() = default;
 	
-	virtual tcp::socket::executor_type getExecutor() = 0;
+	virtual boost::asio::any_io_executor getExecutor() = 0;
 	
 	virtual boost::asio::awaitable<ChatMessageWrapper> asyncRead() = 0;
 	
@@ -29,13 +29,8 @@ public:
 	virtual void stop() = 0;
 	
 protected:
-	BaseSessionCommunicator(tcp::socket socket)
-	: socket_(std::move(socket)), timer_(socket.get_executor()) {
-		timer_.expires_at(std::chrono::steady_clock::time_point::max());
-	}
-	
+	BaseSessionCommunicator(SocketType socket): socket_(std::move(socket)), timer_(socket.get_executor()) {}
 	tcp::socket socket_;
-	
 	boost::asio::steady_timer timer_;
 };
 
