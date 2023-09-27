@@ -31,6 +31,9 @@ private:
 	void cancelOne() override;
 
 	void stop() override;
+	
+	WsSocketType socket_;
+	boost::asio::steady_timer timer_;
 };
 
 #endif /* WsSessionCommunicator_hpp */

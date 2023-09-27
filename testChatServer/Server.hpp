@@ -41,7 +41,6 @@ boost::asio::awaitable<void> Server<SrvComm, SesComm, SocketType>::accept() {
 	for (;;) {
 		auto sessionCommunicator = co_await serverCommunicator_->asyncAccept();
 		try {
-			std::cout << "client accepted! " << std::endl;
 			std::make_shared<Session<SocketType>>(sessionCommunicator, room_)->start();
 		} catch (std::exception& e) {
 			std::cerr << "error in acception" << e.what() << std::endl;

@@ -27,6 +27,9 @@ public:
 	void cancelOne() override;
 
 	void stop() override;
+	
+	tcp::socket socket_;
+	boost::asio::steady_timer timer_;
 };
 
 #endif /* TcpSessionCommunicator_hpp */

@@ -2,6 +2,9 @@
 #define BaseCommunicator_hpp
 
 #include <boost/asio.hpp>
+#include <boost/beast/core.hpp>
+#include <boost/beast/websocket.hpp>
+#include <iostream>
 
 using boost::asio::ip::tcp;
 using boost::asio::awaitable;
@@ -27,11 +30,7 @@ public:
 	virtual void cancelOne() = 0;
 	
 	virtual void stop() = 0;
-	
-protected:
-	BaseSessionCommunicator(SocketType socket): socket_(std::move(socket)), timer_(socket.get_executor()) {}
-	SocketType socket_;
-	boost::asio::steady_timer timer_;
 };
+
 
 #endif /* BaseCommunicator_hpp */

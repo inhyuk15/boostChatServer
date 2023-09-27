@@ -3,7 +3,7 @@
 
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
-
+#include <iostream>
 #include "BaseServerCommunicator.hpp"
 
 using namespace boost::beast;

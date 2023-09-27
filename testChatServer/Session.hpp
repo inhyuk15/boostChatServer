@@ -68,7 +68,8 @@ boost::asio::awaitable<void> Session<SocketType>::readMsg() {
 								std::cout << " image" << std::endl;
 						}
 				}
-		} catch (std::exception&) {
+		} catch (std::exception& e) {
+			std::cerr << "error: " << e.what() << std::endl;
 				stop();
 		}
 }
@@ -78,7 +79,8 @@ boost::asio::awaitable<void> Session<SocketType>::startRead() {
 		try {
 				room_->join(this->shared_from_this());
 				co_await readMsg();
-		} catch (std::exception&) {
+		} catch (std::exception& e) {
+			std::cerr << "error: " << e.what() << std::endl;
 				stop();
 		}
 }
@@ -102,6 +104,7 @@ boost::asio::awaitable<void> Session<SocketType>::write() {
 						}
 				}
 		} catch (std::exception& e) {
+			std::cerr << "error: " << e.what() << std::endl;
 				stop();
 		}
 }

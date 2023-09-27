@@ -29,4 +29,7 @@ void Room::deliver(const ChatMessageWrapper& msg) {
     for (auto session : tcpSessions_) {
         session->deliver(msg);
     }
+    for (auto session : wsSessions_) {
+        session->deliver(msg);
+    }
 }

@@ -3,7 +3,7 @@
 #include "ChatMessageWrapper.hpp"
 
 TcpSessionCommunicator::TcpSessionCommunicator(tcp::socket socket)
-    : BaseSessionCommunicator(std::move(socket)) {}
+    : socket_(std::move(socket)), timer_(socket.get_executor()) {}
 
 tcp::socket::executor_type TcpSessionCommunicator::getExecutor() {
     return socket_.get_executor();
