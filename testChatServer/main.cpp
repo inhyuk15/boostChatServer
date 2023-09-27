@@ -11,10 +11,8 @@
 #include "WsSessionCommunicator.hpp"
 
 using boost::asio::ip::tcp;
-using TcpServer =
-    Server<TcpServerCommunicator, TcpSessionCommunicator, tcp::socket>;
-using WsServer = Server<WsServerCommunicator, WsSessionCommunicator,
-                        boost::beast::websocket::stream<tcp::socket>>;
+using TcpServer = Server<TcpServerCommunicator, TcpSessionCommunicator>;
+using WsServer = Server<WsServerCommunicator, WsSessionCommunicator>;
 
 int main(int argc, const char* argv[]) {
     std::string tcpPort = "4000";

@@ -8,9 +8,7 @@
 #include <set>
 
 using boost::asio::ip::tcp;
-using WsSocketType = boost::beast::websocket::stream<tcp::socket>;
 
-template <typename SocketType>
 class Session;
 
 class ChatMessageWrapper;
@@ -19,17 +17,14 @@ class Room {
 public:
 	Room();
 	
-	void join(std::shared_ptr<Session<tcp::socket>> session);
-	void join(std::shared_ptr<Session<WsSocketType>> session);
+	void join(std::shared_ptr<Session> session);
 	
-	void leave(std::shared_ptr<Session<tcp::socket>> session);
-	void leave(std::shared_ptr<Session<WsSocketType>> session);
+	void leave(std::shared_ptr<Session> session);
 	
 	void deliver(const ChatMessageWrapper& msg);
 	
 private:
-	std::set<std::shared_ptr<Session<tcp::socket>>> tcpSessions_;
-	std::set<std::shared_ptr<Session<WsSocketType>>> wsSessions_;
+	std::set<std::shared_ptr<Session>> Sessions_;
 };
 
 #endif /* Room_hpp */

@@ -8,15 +8,16 @@ WsServerCommunicator::WsServerCommunicator(boost::asio::io_context& io_context,
 
 boost::asio::awaitable<std::shared_ptr<WsSessionCommunicator>>
 WsServerCommunicator::asyncAccept() {
-    boost::beast::websocket::stream<tcp::socket> ws(io_context_);
-    co_await acceptor_.async_accept(ws.next_layer(),
+    boost::beast::tcp_stream stream(io_context_);
+    co_await acceptor_.async_accept(stream.socket(),
                                     use_awaitable);  // tcp connection
-    co_await ws.async_accept(use_awaitable);         // handshaking
+    boost::beast::websocket::stream<boost::beast::tcp_stream> ws(
+        std::move(stream));
+
+    co_await ws.async_accept(use_awaitable);  // handshaking
 
     std::shared_ptr<WsSessionCommunicator> sessionCommunicator =
         std::make_shared<WsSessionCommunicator>(std::move(ws));
-    if (!sessionCommunicator) {
-    }
 
     co_return sessionCommunicator;
 }

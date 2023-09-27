@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EC047FB82A5BB7CF00D4FF42 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC047FB72A5BB7CF00D4FF42 /* main.cpp */; };
-		EC24E4812AB41A8200DC2AA0 /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC24E47F2AB41A8200DC2AA0 /* test.cpp */; };
+		ECB8E1432AC46CD500EB376E /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECB8E1422AC46CD500EB376E /* Session.cpp */; };
 		ECC29B102AAADBC00007CE9A /* TcpSessionCommunicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECC29B0E2AAADBC00007CE9A /* TcpSessionCommunicator.cpp */; };
 		ECC29B132AAADBD70007CE9A /* WsServerCommunicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECC29B112AAADBD70007CE9A /* WsServerCommunicator.cpp */; };
 		ECC29B162AAECEB00007CE9A /* TcpServerCommunicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECC29B142AAECEB00007CE9A /* TcpServerCommunicator.cpp */; };
@@ -33,9 +33,8 @@
 /* Begin PBXFileReference section */
 		EC047FB42A5BB7CE00D4FF42 /* testChatServer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testChatServer; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC047FB72A5BB7CF00D4FF42 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		EC24E47F2AB41A8200DC2AA0 /* test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
-		EC24E4802AB41A8200DC2AA0 /* test.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = test.hpp; sourceTree = "<group>"; };
 		EC759A032A6FF97B00ED5CFF /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		ECB8E1422AC46CD500EB376E /* Session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Session.cpp; sourceTree = "<group>"; };
 		ECC29B032AAA31EA0007CE9A /* Server.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Server.hpp; sourceTree = "<group>"; };
 		ECC29B0C2AAADBB20007CE9A /* BaseSessionCommunicator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseSessionCommunicator.hpp; sourceTree = "<group>"; };
 		ECC29B0E2AAADBC00007CE9A /* TcpSessionCommunicator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TcpSessionCommunicator.cpp; sourceTree = "<group>"; };
@@ -99,6 +98,7 @@
 				ECD8D34D2AA572AF0081591E /* ChatMessageWrapper.hpp */,
 				ECC29B032AAA31EA0007CE9A /* Server.hpp */,
 				ECC29B1A2AAED0460007CE9A /* Communicator */,
+				ECB8E1422AC46CD500EB376E /* Session.cpp */,
 			);
 			path = testChatServer;
 			sourceTree = "<group>";
@@ -116,8 +116,6 @@
 				ECC29B142AAECEB00007CE9A /* TcpServerCommunicator.cpp */,
 				ECC29B252AB3D47F0007CE9A /* WsSessionCommunicator.cpp */,
 				ECC29B262AB3D47F0007CE9A /* WsSessionCommunicator.hpp */,
-				EC24E47F2AB41A8200DC2AA0 /* test.cpp */,
-				EC24E4802AB41A8200DC2AA0 /* test.hpp */,
 			);
 			path = Communicator;
 			sourceTree = "<group>";
@@ -203,9 +201,9 @@
 				ECD8D34E2AA572AF0081591E /* ChatMessageWrapper.cpp in Sources */,
 				ECD8D3512AA572C00081591E /* chat.pb.cc in Sources */,
 				ECC29B272AB3D47F0007CE9A /* WsSessionCommunicator.cpp in Sources */,
-				EC24E4812AB41A8200DC2AA0 /* test.cpp in Sources */,
 				ECC29B132AAADBD70007CE9A /* WsServerCommunicator.cpp in Sources */,
 				ECF98B482A7D873300F7593C /* Room.cpp in Sources */,
+				ECB8E1432AC46CD500EB376E /* Session.cpp in Sources */,
 				ECC29B162AAECEB00007CE9A /* TcpServerCommunicator.cpp in Sources */,
 				EC047FB82A5BB7CF00D4FF42 /* main.cpp in Sources */,
 				ECC29B102AAADBC00007CE9A /* TcpSessionCommunicator.cpp in Sources */,

@@ -12,7 +12,7 @@ using boost::asio::use_awaitable;
 
 class ChatMessageWrapper;
 
-class TcpSessionCommunicator : public BaseSessionCommunicator<tcp::socket> {
+class TcpSessionCommunicator : public BaseSessionCommunicator {
 public:
 	TcpSessionCommunicator(tcp::socket socket);
 

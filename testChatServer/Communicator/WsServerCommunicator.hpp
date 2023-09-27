@@ -15,8 +15,6 @@ class WsServerCommunicator : public BaseServerCommunicator<WsSessionCommunicator
 public:
 	WsServerCommunicator(boost::asio::io_context& io_context, const tcp::endpoint& endpoint);
 	boost::asio::awaitable<std::shared_ptr<WsSessionCommunicator>> asyncAccept() override;
-	
-	boost::asio::awaitable<void> handshake();
 };
 
 #endif /* WebSocketCommunicator_hpp */

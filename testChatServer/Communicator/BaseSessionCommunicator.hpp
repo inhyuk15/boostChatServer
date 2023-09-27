@@ -14,7 +14,6 @@ using boost::asio::use_awaitable;
 
 class ChatMessageWrapper;
 
-template <typename SocketType>
 class BaseSessionCommunicator {
 public:
 	virtual ~BaseSessionCommunicator() = default;

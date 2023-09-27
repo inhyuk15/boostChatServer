@@ -15,8 +15,8 @@ using boost::asio::detached;
 using boost::asio::use_awaitable;
 
 
-template <typename SrvComm, typename SesComm, typename SocketType>
-class Server : public std::enable_shared_from_this<Server<SrvComm, SesComm, SocketType>> {
+template <typename SrvComm, typename SesComm>
+class Server : public std::enable_shared_from_this<Server<SrvComm, SesComm>> {
 public:
 	Server(boost::asio::io_context& io_context, const tcp::endpoint& endpoint, std::shared_ptr<Room> room);
 	boost::asio::awaitable<void> accept();
@@ -27,8 +27,8 @@ private:
 	std::shared_ptr<SrvComm> serverCommunicator_;
 };
 
-template <typename SrvComm, typename SesComm, typename SocketType>
-Server<SrvComm, SesComm, SocketType>::Server(boost::asio::io_context& io_context,
+template <typename SrvComm, typename SesComm>
+Server<SrvComm, SesComm>::Server(boost::asio::io_context& io_context,
 										 const tcp::endpoint& endpoint, std::shared_ptr<Room> room)
 : io_context_(io_context), room_(room)
 , serverCommunicator_(
@@ -36,12 +36,12 @@ Server<SrvComm, SesComm, SocketType>::Server(boost::asio::io_context& io_context
 		co_spawn(io_context, accept(), detached);
 }
 
-template <typename SrvComm, typename SesComm, typename SocketType>
-boost::asio::awaitable<void> Server<SrvComm, SesComm, SocketType>::accept() {
+template <typename SrvComm, typename SesComm>
+boost::asio::awaitable<void> Server<SrvComm, SesComm>::accept() {
 	for (;;) {
 		auto sessionCommunicator = co_await serverCommunicator_->asyncAccept();
 		try {
-			std::make_shared<Session<SocketType>>(sessionCommunicator, room_)->start();
+			std::make_shared<Session>(sessionCommunicator, room_)->start();
 		} catch (std::exception& e) {
 			std::cerr << "error in acception" << e.what() << std::endl;
 		}

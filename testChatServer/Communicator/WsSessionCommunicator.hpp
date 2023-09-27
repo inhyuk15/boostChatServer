@@ -12,11 +12,11 @@ using boost::asio::co_spawn;
 using boost::asio::detached;
 using boost::asio::use_awaitable;
 
-using WsSocketType = boost::beast::websocket::stream<tcp::socket>;
+using WsSocketType = boost::beast::websocket::stream<boost::beast::tcp_stream>;
 
 class ChatMessageWrapper;
 
-class WsSessionCommunicator : public BaseSessionCommunicator<WsSocketType> {
+class WsSessionCommunicator : public BaseSessionCommunicator {
 public:
 	WsSessionCommunicator(WsSocketType socket);
 	boost::asio::any_io_executor getExecutor() override;
