@@ -92,13 +92,13 @@
 				ECD8D3502AA572C00081591E /* chat.pb.h */,
 				EC047FB72A5BB7CF00D4FF42 /* main.cpp */,
 				ECF98B3E2A77D93F00F7593C /* Session.hpp */,
+				ECB8E1422AC46CD500EB376E /* Session.cpp */,
 				ECF98B462A7D873300F7593C /* Room.cpp */,
 				ECF98B472A7D873300F7593C /* Room.hpp */,
 				ECD8D34C2AA572AF0081591E /* ChatMessageWrapper.cpp */,
 				ECD8D34D2AA572AF0081591E /* ChatMessageWrapper.hpp */,
 				ECC29B032AAA31EA0007CE9A /* Server.hpp */,
 				ECC29B1A2AAED0460007CE9A /* Communicator */,
-				ECB8E1422AC46CD500EB376E /* Session.cpp */,
 			);
 			path = testChatServer;
 			sourceTree = "<group>";

@@ -19,7 +19,7 @@ public:
 	
 	void join(std::shared_ptr<Session> session);
 	
-	void leave(std::shared_ptr<Session> session);
+	void leave(std::shared_ptr<Session> session, const std::string& msg);
 	
 	void deliver(const ChatMessageWrapper& msg);
 	

@@ -15,8 +15,8 @@ void Room::join(std::shared_ptr<Session> session) {
 //     wsSessions_.insert(session);
 // }
 
-void Room::leave(std::shared_ptr<Session> session) {
-    std::cout << "session leaved: " << std::endl;
+void Room::leave(std::shared_ptr<Session> session, const std::string& msg) {
+    std::cout << "session leaved: " << msg << std::endl;
     Sessions_.erase(session);
 }
 

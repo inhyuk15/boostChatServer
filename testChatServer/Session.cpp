@@ -16,31 +16,43 @@ void Session::start() {
 
 boost::asio::awaitable<void> Session::readMsg() {
     try {
+        if (!connected_.load()) {
+            co_return;
+        }
         for (;;) {
+            if (!connected_.load()) {
+                break;
+            }
             ChatMessageWrapper chatMessage =
                 co_await communicator_->asyncRead();
-
+            std::cout << "raw data:"
+                      << chatMessage.Base64Encode(chatMessage.encode())
+                      << std::endl;
             if (chatMessage.getDataType() == chat::TEXT) {
                 room_->deliver(chatMessage);
                 std::cout << "Message: " << chatMessage.getMessageText()
                           << std::endl;
             } else if (chatMessage.getDataType() == chat::IMAGE) {
                 std::cout << " image" << std::endl;
+            } else if (chatMessage.getDataType() == chat::SYSTEM) {
+                if (chatMessage.getSystemCode() == chat::TIMEOUT) {
+                    std::cout << "session timeout" << std::endl;
+                    stop(TIMEOUT);
+                }
             }
         }
     } catch (std::exception& e) {
-        std::cerr << "error: " << e.what() << std::endl;
-        stop();
+        stop(e.what());
     }
 }
 
 boost::asio::awaitable<void> Session::startRead() {
     try {
         room_->join(this->shared_from_this());
+        connected_.store(true);
         co_await readMsg();
     } catch (std::exception& e) {
-        std::cerr << "error: " << e.what() << std::endl;
-        stop();
+        stop(e.what());
     }
 }
 
@@ -51,7 +63,13 @@ void Session::deliver(const ChatMessageWrapper& msg) {
 
 boost::asio::awaitable<void> Session::write() {
     try {
+        if (!connected_.load()) {
+            co_return;
+        }
         for (;;) {
+            if (!connected_.load()) {
+                break;
+            }
             if (writeMsgs_.empty()) {
                 co_await communicator_->asyncWait();
             } else {
@@ -61,12 +79,13 @@ boost::asio::awaitable<void> Session::write() {
             }
         }
     } catch (std::exception& e) {
-        std::cerr << "error: " << e.what() << std::endl;
-        stop();
+        stop(e.what());
     }
 }
 
-void Session::stop() {
-    room_->leave(this->shared_from_this());
+void Session::stop(const std::string& msg) {
+    std::cout << "stop: " << msg << std::endl;
+    room_->leave(this->shared_from_this(), msg);
     communicator_->stop();
+    connected_.store(false);
 }

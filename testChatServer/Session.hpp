@@ -27,14 +27,17 @@ class Session : public std::enable_shared_from_this<Session> {
 
 	void deliver(const ChatMessageWrapper& msg);
 	boost::asio::awaitable<void> write();
-	void stop();
+	void stop(const std::string& msg);
 
 
 	 private:
 		std::shared_ptr<Room> room_;
 		std::deque<ChatMessageWrapper> writeMsgs_;
-
 		std::shared_ptr<BaseSessionCommunicator> communicator_;
+	
+		std::atomic<bool> connected_{false};
+	
+		static constexpr char TIMEOUT[] = "timeout";
 };
 
 #endif /* Session_hpp */
