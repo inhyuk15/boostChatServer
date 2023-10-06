@@ -3,7 +3,9 @@
 #include "ChatMessageWrapper.hpp"
 
 TcpSessionCommunicator::TcpSessionCommunicator(tcp::socket socket)
-    : socket_(std::move(socket)), timer_(socket.get_executor()) {}
+    : socket_(std::move(socket)), timer_(socket.get_executor()) {
+    timer_.expires_at(std::chrono::steady_clock::time_point::max());
+}
 
 tcp::socket::executor_type TcpSessionCommunicator::getExecutor() {
     return socket_.get_executor();

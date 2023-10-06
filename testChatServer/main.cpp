@@ -27,8 +27,8 @@ int main(int argc, const char* argv[]) {
         auto room = std::make_shared<Room>();
         auto tcpServer =
             std::make_shared<TcpServer>(io_context, tcpEndpoint, room);
-        auto wsServer =
-            std::make_shared<WsServer>(io_context, wsEndpoint, room);
+        //        auto wsServer =
+        //            std::make_shared<WsServer>(io_context, wsEndpoint, room);
         io_context.run();
     } catch (std::exception& e) {
         std::cerr << "Exception in main " << e.what() << std::endl;
