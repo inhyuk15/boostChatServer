@@ -25,15 +25,20 @@ boost::asio::awaitable<void> Session::readMsg() {
             }
             ChatMessageWrapper chatMessage =
                 co_await communicator_->asyncRead();
-                        std::cout << "raw data:" << chatMessage.Base64Encode(chatMessage.encode()) << std::endl;
+            std::cout << "raw data:"
+                      << chatMessage.Base64Encode(chatMessage.encode())
+                      << std::endl;
             if (chatMessage.getDataType() == chat::TEXT) {
                 room_->deliver(chatMessage);
-										std::cout << "Message: " << chatMessage.getMessageText() << std::endl;
+                LogMessage logMessage("msg: " + chatMessage.getMessageText());
+                LogManager::getInstance().logMessage(
+                    LogManager::EventType::ChatEvent, logMessage);
             } else if (chatMessage.getDataType() == chat::IMAGE) {
-                                std::cout << " image" << std::endl;
+                LogMessage logMessage("msg: Image identifier-0x3f3f3f3f");
+                LogManager::getInstance().logMessage(
+                    LogManager::EventType::ChatEvent, logMessage);
             } else if (chatMessage.getDataType() == chat::SYSTEM) {
                 if (chatMessage.getSystemCode() == chat::TIMEOUT) {
-										std::cout << "session timeout" << std::endl;
                     stop(TIMEOUT);
                 }
             }
@@ -82,7 +87,9 @@ boost::asio::awaitable<void> Session::write() {
 }
 
 void Session::stop(const std::string& msg) {
-		std::cout << "stop: " << msg << std::endl;
+    LogMessage logMessage(msg);
+    LogManager::getInstance().logMessage(LogManager::EventType::ErrorEvent,
+                                         logMessage);
     room_->leave(this->shared_from_this(), msg);
     communicator_->stop();
     connected_.store(false);

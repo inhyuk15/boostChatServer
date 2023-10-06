@@ -7,10 +7,12 @@
 #include <iostream>
 #include <queue>
 
+#include "LogManager.hpp"
 #include "Room.hpp"
 #include "ChatMessageWrapper.hpp"
 #include "BaseSessionCommunicator.hpp"
 
+#include "LogManager.hpp"
 
 using boost::asio::ip::tcp;
 using boost::asio::awaitable;
