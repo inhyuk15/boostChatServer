@@ -15,6 +15,8 @@
 		ECC29B272AB3D47F0007CE9A /* WsSessionCommunicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECC29B252AB3D47F0007CE9A /* WsSessionCommunicator.cpp */; };
 		ECD8D34E2AA572AF0081591E /* ChatMessageWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD8D34C2AA572AF0081591E /* ChatMessageWrapper.cpp */; };
 		ECD8D3512AA572C00081591E /* chat.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = ECD8D34F2AA572C00081591E /* chat.pb.cc */; };
+		ECE048272AD277570053B6D4 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE048252AD277510053B6D4 /* Util.cpp */; };
+		ECE048292AD287C60053B6D4 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE048282AD285FB0053B6D4 /* LogManager.cpp */; };
 		ECF98B482A7D873300F7593C /* Room.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF98B462A7D873300F7593C /* Room.cpp */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +53,9 @@
 		ECD8D34D2AA572AF0081591E /* ChatMessageWrapper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChatMessageWrapper.hpp; sourceTree = "<group>"; };
 		ECD8D34F2AA572C00081591E /* chat.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chat.pb.cc; sourceTree = "<group>"; };
 		ECD8D3502AA572C00081591E /* chat.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chat.pb.h; sourceTree = "<group>"; };
+		ECE048252AD277510053B6D4 /* Util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
+		ECE048262AD277510053B6D4 /* Util.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
+		ECE048282AD285FB0053B6D4 /* LogManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogManager.cpp; sourceTree = "<group>"; };
 		ECF98B3B2A77D84700F7593C /* .clang-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
 		ECF98B3E2A77D93F00F7593C /* Session.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Session.hpp; sourceTree = "<group>"; };
 		ECF98B462A7D873300F7593C /* Room.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Room.cpp; sourceTree = "<group>"; };
@@ -89,18 +94,21 @@
 		EC047FB62A5BB7CF00D4FF42 /* testChatServer */ = {
 			isa = PBXGroup;
 			children = (
+				ECE048262AD277510053B6D4 /* Util.hpp */,
+				ECE048252AD277510053B6D4 /* Util.cpp */,
 				ECD8D34F2AA572C00081591E /* chat.pb.cc */,
 				ECD8D3502AA572C00081591E /* chat.pb.h */,
 				EC047FB72A5BB7CF00D4FF42 /* main.cpp */,
+				ECC29B032AAA31EA0007CE9A /* Server.hpp */,
 				ECF98B3E2A77D93F00F7593C /* Session.hpp */,
 				ECB8E1422AC46CD500EB376E /* Session.cpp */,
 				ECF98B462A7D873300F7593C /* Room.cpp */,
 				ECF98B472A7D873300F7593C /* Room.hpp */,
 				ECD8D34C2AA572AF0081591E /* ChatMessageWrapper.cpp */,
 				ECD8D34D2AA572AF0081591E /* ChatMessageWrapper.hpp */,
-				ECC29B032AAA31EA0007CE9A /* Server.hpp */,
-				ECC29B1A2AAED0460007CE9A /* Communicator */,
+				ECE048282AD285FB0053B6D4 /* LogManager.cpp */,
 				ECA5F3AB2ACFFF5A00E3B4CE /* LogManager.hpp */,
+				ECC29B1A2AAED0460007CE9A /* Communicator */,
 			);
 			path = testChatServer;
 			sourceTree = "<group>";
@@ -205,10 +213,12 @@
 				ECC29B272AB3D47F0007CE9A /* WsSessionCommunicator.cpp in Sources */,
 				ECC29B132AAADBD70007CE9A /* WsServerCommunicator.cpp in Sources */,
 				ECF98B482A7D873300F7593C /* Room.cpp in Sources */,
+				ECE048292AD287C60053B6D4 /* LogManager.cpp in Sources */,
 				ECB8E1432AC46CD500EB376E /* Session.cpp in Sources */,
 				ECC29B162AAECEB00007CE9A /* TcpServerCommunicator.cpp in Sources */,
 				EC047FB82A5BB7CF00D4FF42 /* main.cpp in Sources */,
 				ECC29B102AAADBC00007CE9A /* TcpSessionCommunicator.cpp in Sources */,
+				ECE048272AD277570053B6D4 /* Util.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

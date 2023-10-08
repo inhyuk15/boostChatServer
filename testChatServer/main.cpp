@@ -27,14 +27,22 @@ int main(int argc, const char* argv[]) {
     logManager.addObserver(LogManager::EventType::ChatEvent,
                            [](const LogMessage& message) {
                                // 채팅 관련 로그 처리
-                               std::cout << message.getContent() << std::endl;
+                               std::cout << message << std::endl;
                            });
 
-    logManager.addObserver(LogManager::EventType::ConnectionEvent,
-                           [](const LogMessage& message) {
-                               // 연결 관련 로그 처리
-                               std::cout << message.getContent() << std::endl;
-                           });
+    logManager.addObserver(
+        LogManager::EventType::ConnectionEvent, [](const LogMessage& message) {
+            // 연결 관련 로그 처리
+            LogMessage::ConnectionState connectionState =
+                message.getConnectionState();
+            if (connectionState == LogMessage::ConnectionState::Connected) {
+            } else if (connectionState ==
+                       LogMessage::ConnectionState::Disconnected) {
+            } else if (connectionState ==
+                       LogMessage::ConnectionState::Reconnected) {
+            }
+            std::cout << message << std::endl;
+        });
 
     logManager.addObserver(LogManager::EventType::ErrorEvent,
                            [](const LogMessage& message) {

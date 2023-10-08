@@ -1,5 +1,7 @@
 #include "Session.hpp"
 
+#include "Util.hpp"
+
 Session::Session(std::shared_ptr<BaseSessionCommunicator> communicator,
                  std::shared_ptr<Room> room)
     : communicator_(communicator), room_(room) {}
@@ -25,16 +27,20 @@ boost::asio::awaitable<void> Session::readMsg() {
             }
             ChatMessageWrapper chatMessage =
                 co_await communicator_->asyncRead();
+            // encode base64 for test
             std::cout << "raw data:"
                       << chatMessage.Base64Encode(chatMessage.encode())
                       << std::endl;
+            std::string timestamp =
+                convertUint32ToString(chatMessage.getTimestamp());
             if (chatMessage.getDataType() == chat::TEXT) {
                 room_->deliver(chatMessage);
-                LogMessage logMessage("msg: " + chatMessage.getMessageText());
+                LogMessage logMessage(chatMessage);
                 LogManager::getInstance().logMessage(
                     LogManager::EventType::ChatEvent, logMessage);
             } else if (chatMessage.getDataType() == chat::IMAGE) {
-                LogMessage logMessage("msg: Image identifier-0x3f3f3f3f");
+                // 임시로 둠, 이미지의 식별자를 전달할 예정
+                LogMessage logMessage(timestamp, "Image identifier-0x3f3f3f3f");
                 LogManager::getInstance().logMessage(
                     LogManager::EventType::ChatEvent, logMessage);
             } else if (chatMessage.getDataType() == chat::SYSTEM) {
@@ -72,7 +78,6 @@ boost::asio::awaitable<void> Session::write() {
             if (!connected_.load()) {
                 break;
             }
-
             if (writeMsgs_.empty()) {
                 co_await communicator_->asyncWait();
             } else {
@@ -86,11 +91,25 @@ boost::asio::awaitable<void> Session::write() {
     }
 }
 
+// error
 void Session::stop(const std::string& msg) {
-    LogMessage logMessage(msg);
+    std::string timestamp = convertUint32ToString(getCurTimestamp());
+    LogMessage logMsg(timestamp, msg);
     LogManager::getInstance().logMessage(LogManager::EventType::ErrorEvent,
-                                         logMessage);
+                                         logMsg);
+
     room_->leave(this->shared_from_this(), msg);
+    communicator_->stop();
+    connected_.store(false);
+}
+
+// disconnect by client or timeout
+void Session::stop(const ChatMessageWrapper& chatMessage) {
+    LogMessage logMsg(chatMessage);
+    LogManager::getInstance().logMessage(LogManager::EventType::ConnectionEvent,
+                                         logMsg);
+
+    room_->leave(this->shared_from_this(), "disconnect");
     communicator_->stop();
     connected_.store(false);
 }

@@ -5,9 +5,9 @@
 #include <cstdlib>
 #include <iostream>
 #include <set>
+#include "Util.hpp"
 #include "Room.hpp"
 #include "Session.hpp"
-
 #include "LogManager.hpp"
 
 using boost::asio::ip::tcp;
@@ -41,8 +41,9 @@ Server<SrvComm, SesComm>::Server(boost::asio::io_context& io_context,
 template <typename SrvComm, typename SesComm>
 boost::asio::awaitable<void> Server<SrvComm, SesComm>::accept() {
 	for (;;) {
-		auto sessionCommunicator = co_await serverCommunicator_->asyncAccept();
-			LogMessage logMessage("connected");
+			auto sessionCommunicator = co_await serverCommunicator_->asyncAccept();
+			std::string timeStamp = convertUint32ToString(getCurTimestamp());
+			LogMessage logMessage(timeStamp, "connected", LogMessage::ConnectionState::Connected);
 			LogManager::getInstance().logMessage(LogManager::EventType::ConnectionEvent, logMessage);
 		try {
 			std::make_shared<Session>(sessionCommunicator, room_)->start();

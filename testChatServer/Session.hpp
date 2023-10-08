@@ -30,6 +30,7 @@ class Session : public std::enable_shared_from_this<Session> {
 	void deliver(const ChatMessageWrapper& msg);
 	boost::asio::awaitable<void> write();
 	void stop(const std::string& msg);
+	void stop(const ChatMessageWrapper& msg);
 
 
 	 private:
