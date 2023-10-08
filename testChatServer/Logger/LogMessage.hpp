@@ -1,9 +1,13 @@
-#ifndef LogManager_hpp
-#define LogManager_hpp
+//
+//  LogMessage.hpp
+//  testChatServer
+//
+//  Created by inhyuk on 2023/10/08.
+//
 
-#include <map>
-#include <list>
-#include <iostream>
+#ifndef LogMessage_hpp
+#define LogMessage_hpp
+
 #include <sstream>
 
 #include "Util.hpp"
@@ -67,17 +71,4 @@ private:
 };
 
 
-class LogManager {
-public:
-		enum class EventType { ChatEvent, ConnectionEvent, ErrorEvent };
-
-		static LogManager& getInstance();
-		
-		void addObserver(EventType type, std::function<void(const LogMessage&)> observer);
-		void logMessage(EventType type, const LogMessage& message);
-private:
-	LogManager();
-		std::map<EventType, std::list<std::function<void(const LogMessage&)>>> observers_;
-};
-
-#endif /* LogManager_hpp */
+#endif /* LogMessage_hpp */

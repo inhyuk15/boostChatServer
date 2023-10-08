@@ -56,6 +56,10 @@
 		ECE048252AD277510053B6D4 /* Util.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Util.cpp; sourceTree = "<group>"; };
 		ECE048262AD277510053B6D4 /* Util.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
 		ECE048282AD285FB0053B6D4 /* LogManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogManager.cpp; sourceTree = "<group>"; };
+		ECE0482D2AD296E00053B6D4 /* ChatLogger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChatLogger.hpp; sourceTree = "<group>"; };
+		ECE048302AD298C40053B6D4 /* SystemLogger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SystemLogger.hpp; sourceTree = "<group>"; };
+		ECE048332AD298ED0053B6D4 /* ConnectionLogger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConnectionLogger.hpp; sourceTree = "<group>"; };
+		ECE048362AD29D7C0053B6D4 /* LogMessage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LogMessage.hpp; sourceTree = "<group>"; };
 		ECF98B3B2A77D84700F7593C /* .clang-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
 		ECF98B3E2A77D93F00F7593C /* Session.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Session.hpp; sourceTree = "<group>"; };
 		ECF98B462A7D873300F7593C /* Room.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Room.cpp; sourceTree = "<group>"; };
@@ -106,8 +110,7 @@
 				ECF98B472A7D873300F7593C /* Room.hpp */,
 				ECD8D34C2AA572AF0081591E /* ChatMessageWrapper.cpp */,
 				ECD8D34D2AA572AF0081591E /* ChatMessageWrapper.hpp */,
-				ECE048282AD285FB0053B6D4 /* LogManager.cpp */,
-				ECA5F3AB2ACFFF5A00E3B4CE /* LogManager.hpp */,
+				ECE0482A2AD296B70053B6D4 /* Logger */,
 				ECC29B1A2AAED0460007CE9A /* Communicator */,
 			);
 			path = testChatServer;
@@ -128,6 +131,27 @@
 				ECC29B262AB3D47F0007CE9A /* WsSessionCommunicator.hpp */,
 			);
 			path = Communicator;
+			sourceTree = "<group>";
+		};
+		ECE0482A2AD296B70053B6D4 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				ECE0482B2AD296C40053B6D4 /* Observers */,
+				ECE048282AD285FB0053B6D4 /* LogManager.cpp */,
+				ECA5F3AB2ACFFF5A00E3B4CE /* LogManager.hpp */,
+				ECE048362AD29D7C0053B6D4 /* LogMessage.hpp */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
+		ECE0482B2AD296C40053B6D4 /* Observers */ = {
+			isa = PBXGroup;
+			children = (
+				ECE0482D2AD296E00053B6D4 /* ChatLogger.hpp */,
+				ECE048332AD298ED0053B6D4 /* ConnectionLogger.hpp */,
+				ECE048302AD298C40053B6D4 /* SystemLogger.hpp */,
+			);
+			path = Observers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
