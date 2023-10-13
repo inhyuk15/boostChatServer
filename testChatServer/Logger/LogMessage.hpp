@@ -20,6 +20,9 @@ public:
 		LogMessage(std::string timestamp, const std::string& content,
 							 ConnectionState state = ConnectionState::None, const std::string& usrIdentity = "none")
 				: timestamp_(timestamp), content_(content), state_(state), usrIdentity_(usrIdentity) {}
+		LogMessage(uint32_t timestamp, const std::string& content,
+							 ConnectionState state = ConnectionState::None, const std::string& usrIdentity = "none")
+				: timestamp_(convertUint32ToString(timestamp)), content_(content), state_(state), usrIdentity_(usrIdentity) {}
 		LogMessage(const ChatMessageWrapper& chatMessage) {
 			timestamp_ = convertUint32ToString(chatMessage.getTimestamp());
 			content_ = chatMessage.getMessageText();

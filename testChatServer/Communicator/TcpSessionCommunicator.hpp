@@ -3,6 +3,8 @@
 
 #include <boost/asio.hpp>
 #include "BaseSessionCommunicator.hpp"
+#include "LogMessage.hpp"
+#include "LogManager.hpp"
 
 using boost::asio::ip::tcp;
 using boost::asio::awaitable;

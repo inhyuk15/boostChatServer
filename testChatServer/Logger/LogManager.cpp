@@ -9,6 +9,8 @@ std::ostream &operator<<(std::ostream &os, const LogMessage &message)
 LogManager::LogManager()
 {
     addObserver(LogManager::EventType::ChatEvent, ChatLogger());
+    addObserver(LogManager::EventType::ChatEvent, SocketBufferCheckLogger());
+
     addObserver(LogManager::EventType::ConnectionEvent, ConnectionLogger());
     addObserver(LogManager::EventType::ErrorEvent, SystemLogger());
 }

@@ -10,9 +10,8 @@
 #include "ChatLogger.hpp"
 #include "ConnectionLogger.hpp"
 #include "SystemLogger.hpp"
+#include "SocketBufferCheckLogger.hpp"
 
-//class ConnectionLogger;
-//class SystemLogger;
 class ChatMessageWrapper;
 class LogMessage;
 

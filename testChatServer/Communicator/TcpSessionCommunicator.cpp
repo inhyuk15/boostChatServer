@@ -15,14 +15,31 @@ tcp::socket::executor_type TcpSessionCommunicator::getExecutor()
 
 boost::asio::awaitable<ChatMessageWrapper> TcpSessionCommunicator::asyncRead()
 {
+    auto start_time = std::chrono::high_resolution_clock::now();
+
     uint32_t networkDataSize;
     co_await boost::asio::async_read(socket_, boost::asio::buffer(&networkDataSize, sizeof(networkDataSize)),
                                      use_awaitable);
+
+    boost::asio::socket_base::receive_buffer_size recv_option;
+    socket_.get_option(recv_option);
+    int recv_buffer_size = recv_option.value();
+    std::string bfSizeMsg = "Current receive buffer size: " + std::to_string(recv_buffer_size);
+    LogMessage logMessage(getCurTimestamp(), bfSizeMsg);
+
+    LogManager::getInstance().logMessage(LogManager::EventType::ChatEvent, logMessage);
 
     std::size_t dataSize = ntohl(networkDataSize);
 
     std::string binaryData(dataSize, '\0');
     co_await boost::asio::async_read(socket_, boost::asio::buffer(binaryData), use_awaitable);
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time); //
+    std::string elapsedTimeMsg = "Time taken to receive message: " + std::to_string(elapsed.count()) + "ms";
+    LogManager::getInstance().logMessage(LogManager::EventType::ChatEvent,
+                                         LogMessage(getCurTimestamp(), elapsedTimeMsg));
+
     ChatMessageWrapper chatMessage;
     chatMessage.decode(binaryData);
 
@@ -31,6 +48,13 @@ boost::asio::awaitable<ChatMessageWrapper> TcpSessionCommunicator::asyncRead()
 
 boost::asio::awaitable<void> TcpSessionCommunicator::asyncWrite(const std::string &sendBytes)
 {
+    boost::asio::socket_base::send_buffer_size send_option;
+    socket_.get_option(send_option);
+    int send_buffer_size = send_option.value();
+    std::string bfSizeMsg = "send buffer data: " + std::to_string(send_buffer_size);
+
+    LogMessage logMessage(getCurTimestamp(), bfSizeMsg);
+    LogManager::getInstance().logMessage(LogManager::EventType::ChatEvent, logMessage);
     uint32_t dataSize = static_cast<uint32_t>(sendBytes.size());
     dataSize = htonl(dataSize);
 
