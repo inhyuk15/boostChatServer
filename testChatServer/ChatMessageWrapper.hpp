@@ -6,7 +6,7 @@
 class ChatMessageWrapper {
 public:
 	ChatMessageWrapper();
-		ChatMessageWrapper(const std::string& userName, uint32_t timestamp, chat::DataType dataType);
+		ChatMessageWrapper(const std::string& userName, uint64_t timestamp, chat::DataType dataType);
 
 		void setTextMessage(const std::string& messageText);
 		void setImageMessage(const std::string& imageExtension, const std::vector<uint8_t>& imageData);
@@ -17,7 +17,7 @@ public:
 		void decode(const std::string& input);
 
 		std::string getUserName() const;
-		uint32_t getTimestamp() const;
+		uint64_t getTimestamp() const;
 		chat::DataType getDataType() const;
 		chat::SystemCode getSystemCode() const;
 

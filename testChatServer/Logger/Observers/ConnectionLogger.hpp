@@ -5,37 +5,31 @@
 #include <fstream>
 
 #include "LogMessage.hpp"
+#include "DbHandler.hpp"
 
 class ConnectionLogger {
 private:
-		std::string buffer_;
-		const std::string logFilePath_ = "connectionLog.txt";
+		std::vector<LogMessage> buffer_;
 		const size_t maxBufferSize_ = 1024;
+		size_t curBufferSize_;
+		const size_t maxMsgCnt_ = 50;
+		size_t curMsgCnt_;
+		std::shared_ptr<DbHandler> dbHandler_;
 
 public:
+		ConnectionLogger(std::shared_ptr<DbHandler> dbHandler)
+		: dbHandler_(dbHandler), curBufferSize_(0), curMsgCnt_(0) {}
+	
 		void operator()(const LogMessage &message) {
-				buffer_ += message.ToString() + "\n";
-
-				// 연결 관련 로그 처리
-				LogMessage::ConnectionState connectionState = message.getConnectionState();
-				if (connectionState == LogMessage::ConnectionState::Connected)
-				{
-						
-				}
-				else if (connectionState == LogMessage::ConnectionState::Disconnected)
-				{
-						
-				}
-				else if (connectionState == LogMessage::ConnectionState::Reconnected)
-				{
-				}
-				std::cout << message << std::endl;
+				buffer_.push_back(message);
+				curBufferSize_ += message.ToString().length();
+				curMsgCnt_++;
 		
-				if (buffer_.size() >= maxBufferSize_) {
-						std::ofstream logFile(logFilePath_, std::ios::app);
-						logFile << buffer_;
-						logFile.close();
-						buffer_.clear();
+				if (curBufferSize_ >= maxBufferSize_ || curMsgCnt_ > maxMsgCnt_) {
+					dbHandler_->storeLogMessage(buffer_);
+					buffer_.clear();
+					curBufferSize_ = 0;
+					curMsgCnt_ = 0;
 				}
 		}
 };

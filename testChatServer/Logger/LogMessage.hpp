@@ -20,15 +20,13 @@ public:
 		LogMessage(std::string timestamp, const std::string& content,
 							 ConnectionState state = ConnectionState::None, const std::string& usrIdentity = "none")
 				: timestamp_(timestamp), content_(content), state_(state), usrIdentity_(usrIdentity) {}
-		LogMessage(uint32_t timestamp, const std::string& content,
+		LogMessage(uint64_t timestamp, const std::string& content,
 							 ConnectionState state = ConnectionState::None, const std::string& usrIdentity = "none")
-				: timestamp_(convertUint32ToString(timestamp)), content_(content), state_(state), usrIdentity_(usrIdentity) {}
+				: timestamp_(convertUint64ToString(timestamp)), content_(content), state_(state), usrIdentity_(usrIdentity) {}
 		LogMessage(const ChatMessageWrapper& chatMessage) {
-			timestamp_ = convertUint32ToString(chatMessage.getTimestamp());
-			content_ = chatMessage.getMessageText();
+			setChatMsg2LogMsg(chatMessage);
 			// reconnect 인지 아닌지는 client에서 보내야함. 이건 추후 수정 필요, 일단 Connected로 둠
 			state_ = ConnectionState::Connected;
-			usrIdentity_ = chatMessage.getUserName();
 		}
 	
 		std::string ToString() const {
@@ -41,7 +39,7 @@ public:
 		friend std::ostream& operator<<(std::ostream& os, const LogMessage& message);
 
 		void setChatMsg2LogMsg(const ChatMessageWrapper& chatMessage) {
-			timestamp_ = convertUint32ToString(chatMessage.getTimestamp());
+			timestamp_ = convertUint64ToString(chatMessage.getTimestamp());
 			content_ = chatMessage.getMessageText();
 			usrIdentity_ = chatMessage.getUserName();
 		}
@@ -62,8 +60,9 @@ public:
 			usrIdentity_ = usrIdentity;
 		}
 	
-		const std::string& getContent() const { return content_; }
+		std::string getContent() const { return content_; }
 		ConnectionState getConnectionState() const { return state_; }
+		std::string getUsrIdentity() const { return usrIdentity_; }
 		std::string getTimestamp() const { return timestamp_; }
 
 private:

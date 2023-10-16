@@ -31,8 +31,7 @@ boost::asio::awaitable<void> Session::readMsg()
             }
             ChatMessageWrapper chatMessage = co_await communicator_->asyncRead();
             // encode base64 for test
-            //            std::cout << "raw data:" << chatMessage.Base64Encode(chatMessage.encode()) << std::endl;
-            std::string timestamp = convertUint32ToString(chatMessage.getTimestamp());
+            std::string timestamp = convertUint64ToString(chatMessage.getTimestamp());
             if (chatMessage.getDataType() == chat::TEXT)
             {
                 room_->deliver(chatMessage);
@@ -115,7 +114,7 @@ boost::asio::awaitable<void> Session::write()
 // error
 void Session::stop(const std::string &msg)
 {
-    std::string timestamp = convertUint32ToString(getCurTimestamp());
+    std::string timestamp = convertUint64ToString(getCurTimestamp());
     LogMessage logMsg(timestamp, msg);
     LogManager::getInstance().logMessage(LogManager::EventType::ErrorEvent, logMsg);
 

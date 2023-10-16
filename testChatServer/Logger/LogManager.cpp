@@ -8,11 +8,13 @@ std::ostream &operator<<(std::ostream &os, const LogMessage &message)
 
 LogManager::LogManager()
 {
-    addObserver(LogManager::EventType::ChatEvent, ChatLogger());
-    addObserver(LogManager::EventType::ChatEvent, SocketBufferCheckLogger());
 
-    addObserver(LogManager::EventType::ConnectionEvent, ConnectionLogger());
-    addObserver(LogManager::EventType::ErrorEvent, SystemLogger());
+    dbHandler_ = std::make_shared<DbHandler>();
+    addObserver(LogManager::EventType::ChatEvent, ChatLogger(dbHandler_));
+    //    addObserver(LogManager::EventType::ChatEvent, SocketBufferCheckLogger());
+    addObserver(LogManager::EventType::ConnectionEvent, ConnectionLogger(dbHandler_));
+
+    addObserver(LogManager::EventType::ErrorEvent, SystemLogger(dbHandler_));
 }
 
 LogManager &LogManager::getInstance()
@@ -23,7 +25,7 @@ LogManager &LogManager::getInstance()
 
 void LogManager::addObserver(EventType type, std::function<void(const LogMessage &)> observer)
 {
-    observers_[type].push_back(observer);
+    observers_[type].push_back(std::move(observer));
 }
 
 void LogManager::logMessage(EventType type, const LogMessage &message)
@@ -32,4 +34,9 @@ void LogManager::logMessage(EventType type, const LogMessage &message)
     {
         observer(message);
     }
+}
+
+void LogManager::setDbHandler(std::shared_ptr<DbHandler> dbHandler)
+{
+    dbHandler_ = dbHandler;
 }

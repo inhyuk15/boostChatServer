@@ -42,7 +42,7 @@ template <typename SrvComm, typename SesComm>
 boost::asio::awaitable<void> Server<SrvComm, SesComm>::accept() {
 	for (;;) {
 			auto sessionCommunicator = co_await serverCommunicator_->asyncAccept();
-			std::string timeStamp = convertUint32ToString(getCurTimestamp());
+			std::string timeStamp = convertUint64ToString(getCurTimestamp());
 			LogMessage logMessage(timeStamp, "connected", LogMessage::ConnectionState::Connected);
 			LogManager::getInstance().logMessage(LogManager::EventType::ConnectionEvent, logMessage);
 		try {

@@ -16,7 +16,7 @@ enum SystemCode {
 
 message ChatMessage {
   string user_name = 1;
-  uint32 timestamp = 2;
+  uint64 timestamp = 2;
   DataType data_type = 3;
   
   oneof content {

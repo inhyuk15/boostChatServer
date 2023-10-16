@@ -271,13 +271,13 @@ class ChatMessage final :
   std::string* _internal_mutable_file_extension();
   public:
 
-  // uint32 timestamp = 2;
+  // uint64 timestamp = 2;
   void clear_timestamp();
-  uint32_t timestamp() const;
-  void set_timestamp(uint32_t value);
+  uint64_t timestamp() const;
+  void set_timestamp(uint64_t value);
   private:
-  uint32_t _internal_timestamp() const;
-  void _internal_set_timestamp(uint32_t value);
+  uint64_t _internal_timestamp() const;
+  void _internal_set_timestamp(uint64_t value);
   public:
 
   // .chat.DataType data_type = 3;
@@ -351,7 +351,7 @@ class ChatMessage final :
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr user_name_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_extension_;
-    uint32_t timestamp_;
+    uint64_t timestamp_;
     int data_type_;
     int system_code_;
     union ContentUnion {
@@ -428,22 +428,22 @@ inline void ChatMessage::set_allocated_user_name(std::string* user_name) {
   // @@protoc_insertion_point(field_set_allocated:chat.ChatMessage.user_name)
 }
 
-// uint32 timestamp = 2;
+// uint64 timestamp = 2;
 inline void ChatMessage::clear_timestamp() {
-  _impl_.timestamp_ = 0u;
+  _impl_.timestamp_ = uint64_t{0u};
 }
-inline uint32_t ChatMessage::_internal_timestamp() const {
+inline uint64_t ChatMessage::_internal_timestamp() const {
   return _impl_.timestamp_;
 }
-inline uint32_t ChatMessage::timestamp() const {
+inline uint64_t ChatMessage::timestamp() const {
   // @@protoc_insertion_point(field_get:chat.ChatMessage.timestamp)
   return _internal_timestamp();
 }
-inline void ChatMessage::_internal_set_timestamp(uint32_t value) {
+inline void ChatMessage::_internal_set_timestamp(uint64_t value) {
   
   _impl_.timestamp_ = value;
 }
-inline void ChatMessage::set_timestamp(uint32_t value) {
+inline void ChatMessage::set_timestamp(uint64_t value) {
   _internal_set_timestamp(value);
   // @@protoc_insertion_point(field_set:chat.ChatMessage.timestamp)
 }

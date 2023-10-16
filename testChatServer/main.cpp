@@ -4,13 +4,22 @@
 #include <fstream>
 #include <iostream>
 
+#include "DbHandler.hpp"
 #include "LogManager.hpp"
+
 #include "Room.hpp"
 #include "Server.hpp"
 #include "TcpServerCommunicator.hpp"
 #include "TcpSessionCommunicator.hpp"
 #include "WsServerCommunicator.hpp"
 #include "WsSessionCommunicator.hpp"
+
+#include "ChatLogger.hpp"
+#include "ChatMessageWrapper.hpp"
+#include "LogMessage.hpp"
+#include "Util.hpp"
+#include <hiredis/hiredis.h>
+#include <vector>
 
 using boost::asio::ip::tcp;
 using TcpServer = Server<TcpServerCommunicator, TcpSessionCommunicator>;
@@ -26,7 +35,6 @@ int main(int argc, const char *argv[])
     tcp::endpoint tcpEndpoint(tcp::v4(), stoi(tcpPort));
     tcp::endpoint wsEndpoint(tcp::v4(), stoi(wsPort));
 
-    LogManager::getInstance();
     try
     {
         auto room = std::make_shared<Room>();

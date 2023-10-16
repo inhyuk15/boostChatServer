@@ -25,7 +25,7 @@ PROTOBUF_CONSTEXPR ChatMessage::ChatMessage(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.user_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.file_extension_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.timestamp_)*/0u
+  , /*decltype(_impl_.timestamp_)*/uint64_t{0u}
   , /*decltype(_impl_.data_type_)*/0
   , /*decltype(_impl_.system_code_)*/0
   , /*decltype(_impl_.content_)*/{}
@@ -71,7 +71,7 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_chat_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\nchat.proto\022\004chat\"\316\001\n\013ChatMessage\022\021\n\tus"
-  "er_name\030\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\r\022!\n\tdata"
+  "er_name\030\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\004\022!\n\tdata"
   "_type\030\003 \001(\0162\016.chat.DataType\022\026\n\014message_t"
   "ext\030\004 \001(\tH\000\022\024\n\nimage_data\030\005 \001(\014H\000\022%\n\013sys"
   "tem_code\030\006 \001(\0162\020.chat.SystemCode\022\026\n\016file"
@@ -194,7 +194,7 @@ inline void ChatMessage::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.user_name_){}
     , decltype(_impl_.file_extension_){}
-    , decltype(_impl_.timestamp_){0u}
+    , decltype(_impl_.timestamp_){uint64_t{0u}}
     , decltype(_impl_.data_type_){0}
     , decltype(_impl_.system_code_){0}
     , decltype(_impl_.content_){}
@@ -284,10 +284,10 @@ const char* ChatMessage::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
         } else
           goto handle_unusual;
         continue;
-      // uint32 timestamp = 2;
+      // uint64 timestamp = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.timestamp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.timestamp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -378,10 +378,10 @@ uint8_t* ChatMessage::_InternalSerialize(
         1, this->_internal_user_name(), target);
   }
 
-  // uint32 timestamp = 2;
+  // uint64 timestamp = 2;
   if (this->_internal_timestamp() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_timestamp(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(2, this->_internal_timestamp(), target);
   }
 
   // .chat.DataType data_type = 3;
@@ -454,9 +454,9 @@ size_t ChatMessage::ByteSizeLong() const {
         this->_internal_file_extension());
   }
 
-  // uint32 timestamp = 2;
+  // uint64 timestamp = 2;
   if (this->_internal_timestamp() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_timestamp());
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_timestamp());
   }
 
   // .chat.DataType data_type = 3;

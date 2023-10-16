@@ -13,6 +13,7 @@
 		ECC29B132AAADBD70007CE9A /* WsServerCommunicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECC29B112AAADBD70007CE9A /* WsServerCommunicator.cpp */; };
 		ECC29B162AAECEB00007CE9A /* TcpServerCommunicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECC29B142AAECEB00007CE9A /* TcpServerCommunicator.cpp */; };
 		ECC29B272AB3D47F0007CE9A /* WsSessionCommunicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECC29B252AB3D47F0007CE9A /* WsSessionCommunicator.cpp */; };
+		ECC69CA12AD99C3D0077B5D2 /* DbHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECC69C9F2AD99C3D0077B5D2 /* DbHandler.cpp */; };
 		ECD8D34E2AA572AF0081591E /* ChatMessageWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECD8D34C2AA572AF0081591E /* ChatMessageWrapper.cpp */; };
 		ECD8D3512AA572C00081591E /* chat.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = ECD8D34F2AA572C00081591E /* chat.pb.cc */; };
 		ECE048272AD277570053B6D4 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE048252AD277510053B6D4 /* Util.cpp */; };
@@ -50,6 +51,8 @@
 		ECC29B182AAECEBF0007CE9A /* BaseServerCommunicator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseServerCommunicator.hpp; sourceTree = "<group>"; };
 		ECC29B252AB3D47F0007CE9A /* WsSessionCommunicator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WsSessionCommunicator.cpp; sourceTree = "<group>"; };
 		ECC29B262AB3D47F0007CE9A /* WsSessionCommunicator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WsSessionCommunicator.hpp; sourceTree = "<group>"; };
+		ECC69C9F2AD99C3D0077B5D2 /* DbHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DbHandler.cpp; sourceTree = "<group>"; };
+		ECC69CA02AD99C3D0077B5D2 /* DbHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DbHandler.hpp; sourceTree = "<group>"; };
 		ECD8D34C2AA572AF0081591E /* ChatMessageWrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ChatMessageWrapper.cpp; sourceTree = "<group>"; };
 		ECD8D34D2AA572AF0081591E /* ChatMessageWrapper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChatMessageWrapper.hpp; sourceTree = "<group>"; };
 		ECD8D34F2AA572C00081591E /* chat.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chat.pb.cc; sourceTree = "<group>"; };
@@ -141,6 +144,8 @@
 				ECE048282AD285FB0053B6D4 /* LogManager.cpp */,
 				ECA5F3AB2ACFFF5A00E3B4CE /* LogManager.hpp */,
 				ECE048362AD29D7C0053B6D4 /* LogMessage.hpp */,
+				ECC69C9F2AD99C3D0077B5D2 /* DbHandler.cpp */,
+				ECC69CA02AD99C3D0077B5D2 /* DbHandler.hpp */,
 			);
 			path = Logger;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				EC047FB82A5BB7CF00D4FF42 /* main.cpp in Sources */,
 				ECC29B102AAADBC00007CE9A /* TcpSessionCommunicator.cpp in Sources */,
 				ECE048272AD277570053B6D4 /* Util.cpp in Sources */,
+				ECC69CA12AD99C3D0077B5D2 /* DbHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +385,10 @@
 				HEADER_SEARCH_PATHS = "/Users/inhyuk/Documents/github/boost/vcpkg/installed/x64-osx/include";
 				LIBRARY_SEARCH_PATHS = "/Users/inhyuk/Documents/github/boost/vcpkg/installed/x64-osx/lib";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				OTHER_LDFLAGS = "-lprotobuf";
+				OTHER_LDFLAGS = (
+					"-lprotobuf",
+					"-lhiredis",
+				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -395,7 +404,10 @@
 				HEADER_SEARCH_PATHS = "/Users/inhyuk/Documents/github/boost/vcpkg/installed/x64-osx/include";
 				LIBRARY_SEARCH_PATHS = "/Users/inhyuk/Documents/github/boost/vcpkg/installed/x64-osx/lib";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				OTHER_LDFLAGS = "-lprotobuf";
+				OTHER_LDFLAGS = (
+					"-lprotobuf",
+					"-lhiredis",
+				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";

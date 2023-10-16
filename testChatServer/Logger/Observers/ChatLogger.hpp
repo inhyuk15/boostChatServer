@@ -3,24 +3,33 @@
 
 #include <functional>
 #include <fstream>
+#include <vector>
 
 #include "LogMessage.hpp"
+#include "DbHandler.hpp"
 
 class ChatLogger {
 private:
-		std::string buffer_;
-		const std::string logFilePath_ = "chatLog.txt";
+		std::vector<LogMessage> buffer_;
 		const size_t maxBufferSize_ = 8192;
+		size_t curBufferSize_;
+		const size_t maxMsgCnt_ = 50;
+		size_t curMsgCnt_;
+		std::shared_ptr<DbHandler> dbHandler_;
 
 public:
+		ChatLogger(std::shared_ptr<DbHandler> dbHandler)
+				 : dbHandler_(dbHandler), curBufferSize_(0), curMsgCnt_(0) {}
+	
 		void operator()(const LogMessage& message) {
-				buffer_ += message.ToString() + "\n";
-
-				if (buffer_.size() >= maxBufferSize_) {
-						std::ofstream logFile(logFilePath_, std::ios::app);
-						logFile << buffer_;
-						logFile.close();
-						buffer_.clear();
+				buffer_.push_back(message);
+				curBufferSize_ += message.ToString().length();
+				curMsgCnt_++;
+				if (curBufferSize_ >= maxBufferSize_ || curMsgCnt_ > maxMsgCnt_) {
+					dbHandler_->storeLogMessage(buffer_);
+					buffer_.clear();
+					curBufferSize_ = 0;
+					curMsgCnt_ = 0;
 				}
 		}
 };

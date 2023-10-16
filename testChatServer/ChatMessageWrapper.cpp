@@ -8,7 +8,7 @@ ChatMessageWrapper::ChatMessageWrapper()
 {
 }
 
-ChatMessageWrapper::ChatMessageWrapper(const std::string &userName, uint32_t timestamp, chat::DataType dataType)
+ChatMessageWrapper::ChatMessageWrapper(const std::string &userName, uint64_t timestamp, chat::DataType dataType)
 {
     message_.set_user_name(userName);
     message_.set_timestamp(timestamp);
@@ -53,7 +53,7 @@ std::string ChatMessageWrapper::getUserName() const
     return message_.user_name();
 }
 
-uint32_t ChatMessageWrapper::getTimestamp() const
+uint64_t ChatMessageWrapper::getTimestamp() const
 {
     return message_.timestamp();
 }
